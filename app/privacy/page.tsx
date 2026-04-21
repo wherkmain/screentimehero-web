@@ -167,6 +167,7 @@ export default function PrivacyPage() {
               <Link href="/download" className="hover:text-white transition-colors">Download</Link>
               <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
               <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
+              <Link href="/support" className="hover:text-white transition-colors">Support</Link>
             </nav>
           </div>
           <div className="mt-6 pt-6 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-gray-400">

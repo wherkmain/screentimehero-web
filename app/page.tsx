@@ -58,6 +58,7 @@ export default function Home() {
               <button onClick={() => scrollToSection("features")} className="text-gray-600 hover:text-[#3A7BFA] transition-colors">Features</button>
               <button onClick={() => scrollToSection("pricing")} className="text-gray-600 hover:text-[#3A7BFA] transition-colors">Pricing</button>
               <button onClick={() => scrollToSection("faq")} className="text-gray-600 hover:text-[#3A7BFA] transition-colors">FAQ</button>
+              <Link href="/support" className="text-gray-600 hover:text-[#3A7BFA] transition-colors">Support</Link>
             </div>
 
             <div className="hidden md:flex items-center space-x-4">
@@ -89,6 +90,7 @@ export default function Home() {
               <button onClick={() => scrollToSection("features")} className="block w-full text-left py-2 text-gray-600">Features</button>
               <button onClick={() => scrollToSection("pricing")} className="block w-full text-left py-2 text-gray-600">Pricing</button>
               <button onClick={() => scrollToSection("faq")} className="block w-full text-left py-2 text-gray-600">FAQ</button>
+              <Link href="/support" className="block w-full text-left py-2 text-gray-600">Support</Link>
               <div className="pt-3 border-t border-gray-100 space-y-2">
                 <button className="w-full py-2 text-[#3A7BFA] font-medium">Sign In</button>
                 <a href="/download" className="block w-full py-2 bg-[#3A7BFA] text-white font-medium rounded-lg text-center">Start Free Trial</a>
@@ -616,6 +618,7 @@ export default function Home() {
               <h4 className="font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-sm text-gray-400">
                 <li><Link href="/download" className="hover:text-white transition-colors">Download</Link></li>
+                <li><Link href="/support" className="hover:text-white transition-colors">Support</Link></li>
                 <li><a href="mailto:support@screentimehero.com" className="hover:text-white transition-colors">Contact</a></li>
               </ul>
             </div>
@@ -624,6 +627,7 @@ export default function Home() {
               <ul className="space-y-2 text-sm text-gray-400">
                 <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
                 <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
+                <li><Link href="/support" className="hover:text-white transition-colors">Support</Link></li>
               </ul>
             </div>
           </div>
