@@ -72,9 +72,12 @@ export default function Home() {
               </a>
             </div>
 
-            <button 
+            <button
               className="md:hidden p-2"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-navigation"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -83,7 +86,7 @@ export default function Home() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-100">
+          <div id="mobile-navigation" className="md:hidden bg-white border-t border-gray-100">
             <div className="px-4 py-4 space-y-3">
               <button onClick={() => scrollToSection("how-it-works")} className="block w-full text-left py-2 text-gray-600">How It Works</button>
               <button onClick={() => scrollToSection("features")} className="block w-full text-left py-2 text-gray-600">Features</button>
@@ -544,15 +547,23 @@ export default function Home() {
               >
                 <button
                   className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                  id={`faq-button-${index}`}
+                  aria-expanded={openFaq === index}
+                  aria-controls={`faq-panel-${index}`}
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
                 >
                   <span className="font-semibold text-[#1C1F26]">{faq.q}</span>
-                  <ChevronDown 
-                    className={`w-5 h-5 text-gray-400 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} 
+                  <ChevronDown
+                    className={`w-5 h-5 text-gray-400 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
                   />
                 </button>
                 {openFaq === index && (
-                  <div className="px-6 pb-4 text-gray-600">
+                  <div
+                    id={`faq-panel-${index}`}
+                    role="region"
+                    aria-labelledby={`faq-button-${index}`}
+                    className="px-6 pb-4 text-gray-600"
+                  >
                     {faq.a}
                   </div>
                 )}
