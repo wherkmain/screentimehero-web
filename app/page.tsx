@@ -497,9 +497,9 @@ export default function Home() {
               <p className="text-gray-600 mb-6">Everything you need for your family</p>
               
               <div className="mb-6">
-                <span className="text-5xl font-bold">$9.99</span>
+                <span className="text-5xl font-bold">$6.99</span>
                 <span className="text-gray-600">/month</span>
-                <p className="text-sm text-gray-500 mt-1">or $99/year (save 17%)</p>
+                <p className="text-sm text-gray-500 mt-1">or $69.99/year (save 17%)</p>
               </div>
 
               <div className="space-y-3 mb-8">
