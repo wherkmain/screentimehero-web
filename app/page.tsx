@@ -61,12 +61,12 @@ export default function Home() {
             </div>
 
             <div className="hidden md:flex items-center space-x-4">
-              <a
+              <Link
                 href="/download"
                 className="px-4 py-2 bg-[#3A7BFA] text-white font-medium rounded-lg hover:bg-blue-600 transition-colors"
               >
                 Start Free Trial
-              </a>
+              </Link>
             </div>
 
             <button
@@ -90,7 +90,7 @@ export default function Home() {
               <button onClick={() => scrollToSection("pricing")} className="block w-full text-left py-2 text-gray-600">Pricing</button>
               <button onClick={() => scrollToSection("faq")} className="block w-full text-left py-2 text-gray-600">FAQ</button>
               <div className="pt-3 border-t border-gray-100">
-                <a href="/download" className="block w-full py-2 bg-[#3A7BFA] text-white font-medium rounded-lg text-center">Start Free Trial</a>
+                <Link href="/download" className="block w-full py-2 bg-[#3A7BFA] text-white font-medium rounded-lg text-center">Start Free Trial</Link>
               </div>
             </div>
           </div>
@@ -123,14 +123,18 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <motion.a 
-                href="/download"
-                className="w-full sm:w-auto px-8 py-4 bg-[#3A7BFA] text-white font-semibold rounded-xl text-lg hover:bg-blue-600 transition-colors shadow-lg shadow-blue-500/25 text-center"
+              <motion.div
+                className="w-full sm:w-auto"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Start Your Free Trial
-              </motion.a>
+                <Link
+                  href="/download"
+                  className="block w-full sm:w-auto px-8 py-4 bg-[#3A7BFA] text-white font-semibold rounded-xl text-lg hover:bg-blue-600 transition-colors shadow-lg shadow-blue-500/25 text-center"
+                >
+                  Start Your Free Trial
+                </Link>
+              </motion.div>
               <motion.button 
                 className="w-full sm:w-auto px-8 py-4 bg-white text-[#1C1F26] font-semibold rounded-xl text-lg border-2 border-gray-200 hover:border-[#3A7BFA] hover:text-[#3A7BFA] transition-colors"
                 whileHover={{ scale: 1.02 }}
@@ -468,14 +472,17 @@ export default function Home() {
                 ))}
               </div>
 
-              <motion.a 
-                href="/download"
-                className="block w-full py-4 bg-[#3A7BFA] text-white font-semibold rounded-xl text-lg hover:bg-blue-600 transition-colors text-center"
+              <motion.div
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Start Free Trial
-              </motion.a>
+                <Link
+                  href="/download"
+                  className="block w-full py-4 bg-[#3A7BFA] text-white font-semibold rounded-xl text-lg hover:bg-blue-600 transition-colors text-center"
+                >
+                  Start Free Trial
+                </Link>
+              </motion.div>
               
               <p className="text-center text-sm text-gray-500 mt-4">
                 Cancel anytime. No questions asked.
@@ -584,14 +591,18 @@ export default function Home() {
               Join thousands of families who&apos;ve transformed screen time from a battle into motivation.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <motion.a 
-                href="/download"
-                className="w-full sm:w-auto px-8 py-4 bg-[#FFC300] text-[#1C1F26] font-semibold rounded-xl text-lg hover:bg-yellow-400 transition-colors text-center"
+              <motion.div
+                className="w-full sm:w-auto"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Start Your Free 7-Day Trial
-              </motion.a>
+                <Link
+                  href="/download"
+                  className="block w-full sm:w-auto px-8 py-4 bg-[#FFC300] text-[#1C1F26] font-semibold rounded-xl text-lg hover:bg-yellow-400 transition-colors text-center"
+                >
+                  Start Your Free 7-Day Trial
+                </Link>
+              </motion.div>
             </div>
             <p className="mt-4 text-sm text-blue-200">No credit card required. Cancel anytime.</p>
           </motion.div>
