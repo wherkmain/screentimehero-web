@@ -37,8 +37,13 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
+  const NAV_HEIGHT = 64;
   const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    const section = document.getElementById(id);
+    if (section) {
+      const top = section.getBoundingClientRect().top + window.scrollY - NAV_HEIGHT;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
     setMobileMenuOpen(false);
   };
 
