@@ -33,12 +33,133 @@ const staggerContainer = {
   }
 };
 
+const HOW_IT_WORKS_STEPS = [
+  {
+    step: "01",
+    title: "Assign Tasks",
+    description: "Create chores, homework, or activities. Set point values. Add photo proof requirement.",
+    icon: Smartphone,
+    color: "#3A7BFA"
+  },
+  {
+    step: "02",
+    title: "Kids Complete",
+    description: "Your child finishes tasks and submits photo proof through the app. No photo, no points.",
+    icon: Camera,
+    color: "#4CCB6E"
+  },
+  {
+    step: "03",
+    title: "Earn & Redeem",
+    description: "Approve completions, points are awarded automatically. Kids redeem for screen time or rewards.",
+    icon: Gift,
+    color: "#FFC300"
+  }
+];
+
+const FEATURES = [
+  {
+    icon: Camera,
+    title: "Photo Proof",
+    description: "Kids must submit photo evidence for every task. No more guessing if they actually did it.",
+    color: "#4CCB6E"
+  },
+  {
+    icon: Lock,
+    title: "Automatic Enforcement",
+    description: "When time runs out, apps lock automatically using iOS Screen Time APIs. No negotiations needed.",
+    color: "#3A7BFA"
+  },
+  {
+    icon: Gift,
+    title: "Flexible Rewards",
+    description: "Screen time, cash, privileges, or experiences. Customize rewards that motivate YOUR child.",
+    color: "#FFC300"
+  },
+  {
+    icon: Clock,
+    title: "Time Banking",
+    description: "Kids can save up points and redeem when they want. Teaches delayed gratification.",
+    color: "#3A7BFA"
+  },
+  {
+    icon: Star,
+    title: "Achievement Badges",
+    description: "Celebrate milestones with visual achievements that keep kids engaged and motivated.",
+    color: "#FFC300"
+  },
+  {
+    icon: Shield,
+    title: "COPPA Compliant",
+    description: "Built with child safety in mind. Your data stays private and secure.",
+    color: "#4CCB6E"
+  }
+];
+
+const TESTIMONIALS = [
+  {
+    quote: "We went from daily tantrums to my son asking what chores he can do. It's been life-changing.",
+    author: "Sarah M.",
+    detail: "Mom of 2, ages 8 & 11"
+  },
+  {
+    quote: "Finally, an app that actually enforces screen time limits. No more 'just 5 more minutes' negotiations.",
+    author: "Michael R.",
+    detail: "Dad of 3, ages 6-14"
+  },
+  {
+    quote: "The photo proof feature is genius. My daughter used to say she cleaned her room. Now I can actually see it.",
+    author: "Jennifer L.",
+    detail: "Mom of 1, age 9"
+  }
+];
+
+const FAQS = [
+  {
+    q: "How does the screen time enforcement work?",
+    a: "Screen Time Hero uses Apple's native Screen Time APIs (FamilyControls framework) to actually block apps when your child's time runs out. This is real enforcement, not just tracking. The restrictions are applied at the system level."
+  },
+  {
+    q: "What devices does this work on?",
+    a: "Currently, Screen Time Hero works on iPhone and iPad running iOS 15.0 or later. For full screen time enforcement features, iOS 16.0+ is required. We're actively working on an Android version."
+  },
+  {
+    q: "Can my child just uninstall the app?",
+    a: "On iOS, you can prevent app deletion through Screen Time settings (Settings > Screen Time > Content & Privacy Restrictions > iTunes & App Store Purchases > Deleting Apps > Don't Allow). We provide step-by-step instructions for this during setup."
+  },
+  {
+    q: "What if my child doesn't have their own device?",
+    a: "Screen Time Hero works best when children have their own iOS device. However, you can also use it on a shared device by setting up different user profiles or using the app's child mode with a PIN."
+  },
+  {
+    q: "Is my data secure?",
+    a: "Absolutely. We use industry-standard encryption (TLS 1.2+ in transit, AES-256 at rest). We're COPPA compliant and never sell your data. Photos are stored securely and only accessible to you and your linked family members."
+  },
+  {
+    q: "Can I use this for multiple children?",
+    a: "Yes! The Family Plan includes unlimited children at no extra cost. Each child has their own profile, tasks, and reward balance."
+  },
+  {
+    q: "What makes this different from other chore apps?",
+    a: "Two key differences: (1) We're the only app that uses screen time itself as a reward — others use points or money only. (2) We actually enforce screen time limits automatically using iOS native controls, not just track usage."
+  },
+  {
+    q: "Can I cancel my subscription?",
+    a: "Yes, you can cancel anytime from your account settings. If you cancel, you'll continue to have access until the end of your billing period. We also offer a 7-day free trial with no credit card required."
+  }
+];
+
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
+  const NAV_HEIGHT = 64;
   const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    const section = document.getElementById(id);
+    if (section) {
+      const top = section.getBoundingClientRect().top + window.scrollY - NAV_HEIGHT;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
     setMobileMenuOpen(false);
   };
 
@@ -62,20 +183,20 @@ export default function Home() {
             </div>
 
             <div className="hidden md:flex items-center space-x-4">
-              <button className="px-4 py-2 text-[#3A7BFA] font-medium hover:bg-blue-50 rounded-lg transition-colors">
-                Sign In
-              </button>
-              <a 
+              <Link
                 href="/download"
                 className="px-4 py-2 bg-[#3A7BFA] text-white font-medium rounded-lg hover:bg-blue-600 transition-colors"
               >
                 Start Free Trial
-              </a>
+              </Link>
             </div>
 
-            <button 
+            <button
               className="md:hidden p-2"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-navigation"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -84,16 +205,15 @@ export default function Home() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-gray-100">
+          <div id="mobile-navigation" className="md:hidden bg-white border-t border-gray-100">
             <div className="px-4 py-4 space-y-3">
               <button onClick={() => scrollToSection("how-it-works")} className="block w-full text-left py-2 text-gray-600">How It Works</button>
               <button onClick={() => scrollToSection("features")} className="block w-full text-left py-2 text-gray-600">Features</button>
               <button onClick={() => scrollToSection("pricing")} className="block w-full text-left py-2 text-gray-600">Pricing</button>
               <button onClick={() => scrollToSection("faq")} className="block w-full text-left py-2 text-gray-600">FAQ</button>
               <Link href="/support" className="block w-full text-left py-2 text-gray-600">Support</Link>
-              <div className="pt-3 border-t border-gray-100 space-y-2">
-                <button className="w-full py-2 text-[#3A7BFA] font-medium">Sign In</button>
-                <a href="/download" className="block w-full py-2 bg-[#3A7BFA] text-white font-medium rounded-lg text-center">Start Free Trial</a>
+              <div className="pt-3 border-t border-gray-100">
+                <Link href="/download" className="block w-full py-2 bg-[#3A7BFA] text-white font-medium rounded-lg text-center">Start Free Trial</Link>
               </div>
             </div>
           </div>
@@ -126,14 +246,18 @@ export default function Home() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <motion.a 
-                href="/download"
-                className="w-full sm:w-auto px-8 py-4 bg-[#3A7BFA] text-white font-semibold rounded-xl text-lg hover:bg-blue-600 transition-colors shadow-lg shadow-blue-500/25 text-center"
+              <motion.div
+                className="w-full sm:w-auto"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Start Your Free Trial
-              </motion.a>
+                <Link
+                  href="/download"
+                  className="block w-full sm:w-auto px-8 py-4 bg-[#3A7BFA] text-white font-semibold rounded-xl text-lg hover:bg-blue-600 transition-colors shadow-lg shadow-blue-500/25 text-center"
+                >
+                  Start Your Free Trial
+                </Link>
+              </motion.div>
               <motion.button 
                 className="w-full sm:w-auto px-8 py-4 bg-white text-[#1C1F26] font-semibold rounded-xl text-lg border-2 border-gray-200 hover:border-[#3A7BFA] hover:text-[#3A7BFA] transition-colors"
                 whileHover={{ scale: 1.02 }}
@@ -176,12 +300,12 @@ export default function Home() {
                           <span className="text-sm font-medium">{task}</span>
                         </div>
                         <div className="flex space-x-2">
-                          <button className="p-2 bg-[#4CCB6E] text-white rounded-lg">
+                          <div aria-hidden="true" className="p-2 bg-[#4CCB6E] text-white rounded-lg">
                             <CheckCircle className="w-4 h-4" />
-                          </button>
-                          <button className="p-2 bg-gray-200 text-gray-600 rounded-lg">
+                          </div>
+                          <div aria-hidden="true" className="p-2 bg-gray-200 text-gray-600 rounded-lg">
                             <X className="w-4 h-4" />
-                          </button>
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -240,29 +364,7 @@ export default function Home() {
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                step: "01",
-                title: "Assign Tasks",
-                description: "Create chores, homework, or activities. Set point values. Add photo proof requirement.",
-                icon: Smartphone,
-                color: "#3A7BFA"
-              },
-              {
-                step: "02",
-                title: "Kids Complete",
-                description: "Your child finishes tasks and submits photo proof through the app. No photo, no points.",
-                icon: Camera,
-                color: "#4CCB6E"
-              },
-              {
-                step: "03",
-                title: "Earn & Redeem",
-                description: "Approve completions, points are awarded automatically. Kids redeem for screen time or rewards.",
-                icon: Gift,
-                color: "#FFC300"
-              }
-            ].map((item, index) => (
+            {HOW_IT_WORKS_STEPS.map((item, index) => (
               <motion.div
                 key={index}
                 className="bg-white rounded-2xl p-8 shadow-lg"
@@ -303,44 +405,7 @@ export default function Home() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Camera,
-                title: "Photo Proof",
-                description: "Kids must submit photo evidence for every task. No more guessing if they actually did it.",
-                color: "#4CCB6E"
-              },
-              {
-                icon: Lock,
-                title: "Automatic Enforcement",
-                description: "When time runs out, apps lock automatically using iOS Screen Time APIs. No negotiations needed.",
-                color: "#3A7BFA"
-              },
-              {
-                icon: Gift,
-                title: "Flexible Rewards",
-                description: "Screen time, cash, privileges, or experiences. Customize rewards that motivate YOUR child.",
-                color: "#FFC300"
-              },
-              {
-                icon: Clock,
-                title: "Time Banking",
-                description: "Kids can save up points and redeem when they want. Teaches delayed gratification.",
-                color: "#3A7BFA"
-              },
-              {
-                icon: Star,
-                title: "Achievement Badges",
-                description: "Celebrate milestones with visual achievements that keep kids engaged and motivated.",
-                color: "#FFC300"
-              },
-              {
-                icon: Shield,
-                title: "COPPA Compliant",
-                description: "Built with child safety in mind. Your data stays private and secure.",
-                color: "#4CCB6E"
-              }
-            ].map((feature, index) => (
+            {FEATURES.map((feature, index) => (
               <motion.div
                 key={index}
                 className="p-6 rounded-2xl border border-gray-100 hover:shadow-lg transition-shadow"
@@ -377,23 +442,7 @@ export default function Home() {
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                quote: "We went from daily tantrums to my son asking what chores he can do. It's been life-changing.",
-                author: "Sarah M.",
-                detail: "Mom of 2, ages 8 & 11"
-              },
-              {
-                quote: "Finally, an app that actually enforces screen time limits. No more 'just 5 more minutes' negotiations.",
-                author: "Michael R.",
-                detail: "Dad of 3, ages 6-14"
-              },
-              {
-                quote: "The photo proof feature is genius. My daughter used to say she cleaned her room. Now I can actually see it.",
-                author: "Jennifer L.",
-                detail: "Mom of 1, age 9"
-              }
-            ].map((testimonial, index) => (
+            {TESTIMONIALS.map((testimonial, index) => (
               <motion.div
                 key={index}
                 className="bg-white p-6 rounded-2xl shadow-lg"
@@ -471,14 +520,17 @@ export default function Home() {
                 ))}
               </div>
 
-              <motion.a 
-                href="/download"
-                className="block w-full py-4 bg-[#3A7BFA] text-white font-semibold rounded-xl text-lg hover:bg-blue-600 transition-colors text-center"
+              <motion.div
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Start Free Trial
-              </motion.a>
+                <Link
+                  href="/download"
+                  className="block w-full py-4 bg-[#3A7BFA] text-white font-semibold rounded-xl text-lg hover:bg-blue-600 transition-colors text-center"
+                >
+                  Start Free Trial
+                </Link>
+              </motion.div>
               
               <p className="text-center text-sm text-gray-500 mt-4">
                 Cancel anytime. No questions asked.
@@ -502,40 +554,7 @@ export default function Home() {
           </motion.div>
 
           <div className="space-y-4">
-            {[
-              {
-                q: "How does the screen time enforcement work?",
-                a: "Screen Time Hero uses Apple's native Screen Time APIs (FamilyControls framework) to actually block apps when your child's time runs out. This is real enforcement, not just tracking. The restrictions are applied at the system level."
-              },
-              {
-                q: "What devices does this work on?",
-                a: "Currently, Screen Time Hero works on iPhone and iPad running iOS 15.0 or later. For full screen time enforcement features, iOS 16.0+ is required. We're actively working on an Android version."
-              },
-              {
-                q: "Can my child just uninstall the app?",
-                a: "On iOS, you can prevent app deletion through Screen Time settings (Settings > Screen Time > Content & Privacy Restrictions > iTunes & App Store Purchases > Deleting Apps > Don't Allow). We provide step-by-step instructions for this during setup."
-              },
-              {
-                q: "What if my child doesn't have their own device?",
-                a: "Screen Time Hero works best when children have their own iOS device. However, you can also use it on a shared device by setting up different user profiles or using the app's child mode with a PIN."
-              },
-              {
-                q: "Is my data secure?",
-                a: "Absolutely. We use industry-standard encryption (TLS 1.2+ in transit, AES-256 at rest). We're COPPA compliant and never sell your data. Photos are stored securely and only accessible to you and your linked family members."
-              },
-              {
-                q: "Can I use this for multiple children?",
-                a: "Yes! The Family Plan includes unlimited children at no extra cost. Each child has their own profile, tasks, and reward balance."
-              },
-              {
-                q: "What makes this different from other chore apps?",
-                a: "Two key differences: (1) We're the only app that uses screen time itself as a reward — others use points or money only. (2) We actually enforce screen time limits automatically using iOS native controls, not just track usage."
-              },
-              {
-                q: "Can I cancel my subscription?",
-                a: "Yes, you can cancel anytime from your account settings. If you cancel, you'll continue to have access until the end of your billing period. We also offer a 7-day free trial with no credit card required."
-              }
-            ].map((faq, index) => (
+            {FAQS.map((faq, index) => (
               <motion.div
                 key={index}
                 className="bg-white rounded-xl overflow-hidden"
@@ -546,15 +565,23 @@ export default function Home() {
               >
                 <button
                   className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                  id={`faq-button-${index}`}
+                  aria-expanded={openFaq === index}
+                  aria-controls={`faq-panel-${index}`}
                   onClick={() => setOpenFaq(openFaq === index ? null : index)}
                 >
                   <span className="font-semibold text-[#1C1F26]">{faq.q}</span>
-                  <ChevronDown 
-                    className={`w-5 h-5 text-gray-400 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} 
+                  <ChevronDown
+                    className={`w-5 h-5 text-gray-400 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
                   />
                 </button>
                 {openFaq === index && (
-                  <div className="px-6 pb-4 text-gray-600">
+                  <div
+                    id={`faq-panel-${index}`}
+                    role="region"
+                    aria-labelledby={`faq-button-${index}`}
+                    className="px-6 pb-4 text-gray-600"
+                  >
                     {faq.a}
                   </div>
                 )}
@@ -579,14 +606,18 @@ export default function Home() {
               Join thousands of families who&apos;ve transformed screen time from a battle into motivation.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <motion.a 
-                href="/download"
-                className="w-full sm:w-auto px-8 py-4 bg-[#FFC300] text-[#1C1F26] font-semibold rounded-xl text-lg hover:bg-yellow-400 transition-colors text-center"
+              <motion.div
+                className="w-full sm:w-auto"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Start Your Free 7-Day Trial
-              </motion.a>
+                <Link
+                  href="/download"
+                  className="block w-full sm:w-auto px-8 py-4 bg-[#FFC300] text-[#1C1F26] font-semibold rounded-xl text-lg hover:bg-yellow-400 transition-colors text-center"
+                >
+                  Start Your Free 7-Day Trial
+                </Link>
+              </motion.div>
             </div>
             <p className="mt-4 text-sm text-blue-200">No credit card required. Cancel anytime.</p>
           </motion.div>

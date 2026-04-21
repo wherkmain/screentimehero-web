@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
+import { SiteFooter } from "@/app/_components/SiteFooter";
 
 export const metadata: Metadata = {
   title: "Support - Screen Time Hero",
@@ -9,21 +10,25 @@ export const metadata: Metadata = {
 
 const faqs = [
   {
+    id: "how-it-works",
     question: "How does Screen Time Hero work?",
     answer:
       "Parents assign tasks, kids submit photo proof, and approved tasks earn points that can be redeemed for screen time or other rewards.",
   },
   {
+    id: "family-sharing",
     question: "Do I need Apple Family Sharing?",
     answer:
       "Yes, Apple Family Sharing is recommended for the full screen time management experience. It helps Screen Time Hero access the child device controls required by Apple's FamilyControls framework.",
   },
   {
+    id: "restore-subscription",
     question: "Can I restore my subscription?",
     answer:
       "Yes. Open the app, go to Settings, and use Restore Purchases. If that does not work, email support@screentimehero.com and include the Apple ID used for purchase.",
   },
   {
+    id: "delete-data",
     question: "How do I delete my family's data?",
     answer:
       "Email support@screentimehero.com from the parent account email and request account deletion. We will process the request and remove associated family data.",
@@ -88,7 +93,7 @@ export default function SupportPage() {
           <h2 className="text-2xl font-bold text-[#1C1F26] mb-6">Frequently Asked Questions</h2>
           <div className="space-y-4">
             {faqs.map((faq) => (
-              <div key={faq.question} className="rounded-2xl border border-gray-200 p-6">
+              <div key={faq.id} className="rounded-2xl border border-gray-200 p-6">
                 <h3 className="text-lg font-semibold text-[#1C1F26] mb-2">{faq.question}</h3>
                 <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
               </div>
@@ -109,29 +114,7 @@ export default function SupportPage() {
         </section>
       </main>
 
-      <footer className="bg-[#1C1F26] text-white py-8 mt-12">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center space-x-2">
-              <Image src="/logo.svg" alt="Screen Time Hero" width={24} height={24} />
-              <span className="font-bold">Screen Time Hero</span>
-            </div>
-            <nav className="flex items-center space-x-6 text-sm text-gray-400">
-              <Link href="/" className="hover:text-white transition-colors">Home</Link>
-              <Link href="/download" className="hover:text-white transition-colors">Download</Link>
-              <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-              <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
-              <Link href="/support" className="hover:text-white transition-colors">Support</Link>
-            </nav>
-          </div>
-          <div className="mt-6 pt-6 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-gray-400">
-            <p>&copy; 2026 Screen Time Hero. All rights reserved.</p>
-            <a href="mailto:support@screentimehero.com" className="hover:text-white transition-colors">
-              support@screentimehero.com
-            </a>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
