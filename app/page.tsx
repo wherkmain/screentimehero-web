@@ -177,12 +177,12 @@ export default function Home() {
                           <span className="text-sm font-medium">{task}</span>
                         </div>
                         <div className="flex space-x-2">
-                          <button className="p-2 bg-[#4CCB6E] text-white rounded-lg">
+                          <div aria-hidden="true" className="p-2 bg-[#4CCB6E] text-white rounded-lg">
                             <CheckCircle className="w-4 h-4" />
-                          </button>
-                          <button className="p-2 bg-gray-200 text-gray-600 rounded-lg">
+                          </div>
+                          <div aria-hidden="true" className="p-2 bg-gray-200 text-gray-600 rounded-lg">
                             <X className="w-4 h-4" />
-                          </button>
+                          </div>
                         </div>
                       </div>
                     ))}
