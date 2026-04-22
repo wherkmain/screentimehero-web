@@ -198,7 +198,6 @@ function renderState(
     case "alreadyGranted":
       return (
         <TerminalCard
-          tone="success"
           icon={<CheckCircle className="w-12 h-12 text-[#4CCB6E]" />}
           title="You've already approved this request."
           body="Your child's account is unlocked. You can close this page."
@@ -207,7 +206,6 @@ function renderState(
     case "expired":
       return (
         <TerminalCard
-          tone="warn"
           icon={<Clock className="w-12 h-12 text-[#F2C94C]" />}
           title="This consent link has expired."
           body="For safety, consent links expire after 48 hours. Ask your child to sign up again and resend the message."
@@ -216,7 +214,6 @@ function renderState(
     case "revoked":
       return (
         <TerminalCard
-          tone="warn"
           icon={<XCircle className="w-12 h-12 text-gray-400" />}
           title="This request has been cancelled."
           body="Your child's app may have cancelled this request. Ask them to start over if they still want to sign up."
@@ -225,7 +222,6 @@ function renderState(
     case "notFound":
       return (
         <TerminalCard
-          tone="error"
           icon={<AlertTriangle className="w-12 h-12 text-[#EB5757]" />}
           title="We couldn't find that consent link."
           body="The link may be broken or copied incorrectly. Please use the button in the email or text message you received."
@@ -234,7 +230,6 @@ function renderState(
     case "error":
       return (
         <TerminalCard
-          tone="error"
           icon={<AlertTriangle className="w-12 h-12 text-[#EB5757]" />}
           title="Something went wrong."
           body={state.message}
@@ -454,7 +449,6 @@ function GrantedCard() {
 // ---------------------------------------------------------------------------
 
 function TerminalCard(props: {
-  tone: "success" | "warn" | "error";
   icon: React.ReactNode;
   title: string;
   body: string;
