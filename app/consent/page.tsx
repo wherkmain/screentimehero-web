@@ -58,14 +58,14 @@ function ConsentPageInner() {
   // don't waste a checkbox click.
   useEffect(() => {
     if (!token) return;
-    let cancelled = false;
+    const controller = new AbortController();
     (async () => {
       try {
         const res = await fetch(`${API_BASE}/api/consent/${encodeURIComponent(token)}`, {
           method: "GET",
           headers: { Accept: "application/json" },
+          signal: controller.signal,
         });
-        if (cancelled) return;
         if (res.status === 404) {
           setState({ kind: "notFound" });
           return;
@@ -98,8 +98,8 @@ function ConsentPageInner() {
           default:
             setState({ kind: "error", message: "Unexpected response from the server." });
         }
-      } catch {
-        if (cancelled) return;
+      } catch (err) {
+        if (err instanceof DOMException && err.name === "AbortError") return;
         setState({
           kind: "error",
           message: "We couldn't reach the server. Check your internet and try again.",
@@ -107,7 +107,7 @@ function ConsentPageInner() {
       }
     })();
     return () => {
-      cancelled = true;
+      controller.abort();
     };
   }, [token]);
 
