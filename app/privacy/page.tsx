@@ -417,6 +417,16 @@ export default function PrivacyPage() {
               </a>
             </p>
           </section>
+
+          <section>
+            <h2 className="text-2xl font-bold text-[#1C1F26] mb-3">14. Where the Service is offered</h2>
+            <p className="text-gray-600 leading-relaxed">
+              Screen Time Hero is currently offered only in the United States, Canada, and Australia. The app is distributed through the Apple App Store in those territories only. We do not offer the Service, market the Service, or knowingly collect personal information from residents of the European Economic Area, the United Kingdom, or Switzerland at this time.
+            </p>
+            <p className="text-gray-600 leading-relaxed mt-3">
+              The GDPR and UK GDPR references in this policy (Sections 1, 3, 6, and 8) are retained as a defensive measure in case a resident of those regions accesses the Service despite the territory restriction. When we expand into the EEA, the UK, or Switzerland we will update this policy, designate a representative under Article 27 of the GDPR and UK GDPR, and publish the representative&apos;s contact information here before making the Service available in those regions.
+            </p>
+          </section>
         </div>
       </main>
 
