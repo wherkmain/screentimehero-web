@@ -100,6 +100,7 @@ function ConsentPageInner() {
         }
       } catch (err) {
         if (err instanceof DOMException && err.name === "AbortError") return;
+        console.error("[ConsentPage] token validation failed:", err);
         setState({
           kind: "error",
           message: "We couldn't reach the server. Check your internet and try again.",
@@ -304,7 +305,12 @@ function PendingCard(props: {
             </span>
             <span>
               We&apos;ll collect the data described in our{" "}
-              <Link href="/privacy" className="text-[#3A7BFA] hover:underline">
+              <Link
+                href="/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#3A7BFA] hover:underline"
+              >
                 Privacy Policy
               </Link>{" "}
               and use it only to run the app. We do not sell it.
@@ -341,11 +347,21 @@ function PendingCard(props: {
             <>
               I consent to the collection of my child&apos;s information as
               described in the{" "}
-              <Link href="/privacy" className="text-[#3A7BFA] hover:underline">
+              <Link
+                href="/privacy"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#3A7BFA] hover:underline"
+              >
                 Privacy Policy
               </Link>{" "}
               and{" "}
-              <Link href="/terms" className="text-[#3A7BFA] hover:underline">
+              <Link
+                href="/terms"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#3A7BFA] hover:underline"
+              >
                 Terms of Service
               </Link>
               .
@@ -385,7 +401,7 @@ function AttestCheckbox(props: {
   return (
     <label
       htmlFor={props.id}
-      className="flex items-start gap-3 cursor-pointer group"
+      className="flex items-start gap-3 cursor-pointer group rounded focus-within:ring-2 focus-within:ring-[#3A7BFA]/50 focus-within:ring-offset-2"
     >
       <span
         className={`shrink-0 w-5 h-5 mt-0.5 rounded border-2 flex items-center justify-center transition-colors ${
