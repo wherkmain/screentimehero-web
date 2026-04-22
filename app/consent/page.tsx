@@ -18,13 +18,9 @@ import {
 const API_BASE =
   process.env.NEXT_PUBLIC_API_BASE_URL ?? "https://api.screentimehero.com";
 
-// Keep in sync with the backend — versioning the policy lets us prove in an
-// FTC audit which version of the Privacy Policy the parent consented to.
-const PRIVACY_POLICY_VERSION = "2026-04-19";
-
 type FetchState =
   | { kind: "loading" }
-  | { kind: "pending" }
+  | { kind: "pending"; privacyPolicyVersion?: string }
   | { kind: "expired" }
   | { kind: "revoked" }
   | { kind: "alreadyGranted" }
@@ -54,6 +50,18 @@ function ConsentPageInner() {
   const [attestGuardian, setAttestGuardian] = useState(false);
   const [attestConsent, setAttestConsent] = useState(false);
 
+  // Reset fetch + attestation state when `token` changes so approvals from a
+  // previous token can't be replayed against a new one. Doing this during
+  // render (rather than in an effect) avoids a cascading render and keeps us
+  // clear of react-hooks/set-state-in-effect.
+  const [prevToken, setPrevToken] = useState(token);
+  if (prevToken !== token) {
+    setPrevToken(token);
+    setState(token ? { kind: "loading" } : { kind: "notFound" });
+    setAttestGuardian(false);
+    setAttestConsent(false);
+  }
+
   // Validate the token on load so terminal states (expired/granted/etc.)
   // don't waste a checkbox click.
   useEffect(() => {
@@ -81,10 +89,14 @@ function ConsentPageInner() {
           });
           return;
         }
-        const body: { status?: string } = await res.json();
+        const body: { status?: string; privacy_policy_version?: string } =
+          await res.json();
         switch (body.status) {
           case "pending":
-            setState({ kind: "pending" });
+            setState({
+              kind: "pending",
+              privacyPolicyVersion: body.privacy_policy_version,
+            });
             break;
           case "granted":
             setState({ kind: "alreadyGranted" });
@@ -116,7 +128,8 @@ function ConsentPageInner() {
     state.kind === "pending" && attestGuardian && attestConsent;
 
   async function handleConsent() {
-    if (!token || !canSubmit) return;
+    if (!token || !canSubmit || state.kind !== "pending") return;
+    const privacyPolicyVersion = state.privacyPolicyVersion;
     setState({ kind: "submitting" });
     try {
       const res = await fetch(`${API_BASE}/api/consent/${encodeURIComponent(token)}/grant`, {
@@ -128,7 +141,9 @@ function ConsentPageInner() {
         body: JSON.stringify({
           attestation: true,
           method: "email_confirmation",
-          privacy_policy_version: PRIVACY_POLICY_VERSION,
+          ...(privacyPolicyVersion && {
+            privacy_policy_version: privacyPolicyVersion,
+          }),
         }),
       });
       if (res.status === 200) {
@@ -344,32 +359,30 @@ function PendingCard(props: {
         <AttestCheckbox
           checked={attestConsent}
           onChange={setAttestConsent}
-          label={
-            <>
-              I consent to the collection of my child&apos;s information as
-              described in the{" "}
-              <Link
-                href="/privacy"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#3A7BFA] hover:underline"
-              >
-                Privacy Policy
-              </Link>{" "}
-              and{" "}
-              <Link
-                href="/terms"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#3A7BFA] hover:underline"
-              >
-                Terms of Service
-              </Link>
-              .
-            </>
-          }
+          label="I consent to the collection of my child's information as described in the Privacy Policy and Terms of Service."
           id="attest-consent"
         />
+        <p className="pl-8 text-xs text-gray-500">
+          Read the{" "}
+          <Link
+            href="/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#3A7BFA] hover:underline"
+          >
+            Privacy Policy
+          </Link>{" "}
+          and{" "}
+          <Link
+            href="/terms"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#3A7BFA] hover:underline"
+          >
+            Terms of Service
+          </Link>
+          .
+        </p>
       </div>
 
       <button
